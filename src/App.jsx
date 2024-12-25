@@ -5,6 +5,7 @@ const url = "https://www.course-api.com/react-tours-project";
 function App() {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     async function myFetch() {
       try {
@@ -12,13 +13,24 @@ function App() {
         const datas = await response.json();
         setData(datas);
         console.log(data);
+        if (!response.ok) {
+          setIsError(true);
+        }
       } catch (error) {
         console.log(error);
+        setIsError(true);
       }
       setIsLoading(false);
     }
     myFetch();
   }, []);
+  if (isError) {
+    return (
+      <h2 className="text-4xl font-semibold text-red-500 mt-10 ml-[50%] -translate-x-1/3">
+        There has been some error...
+      </h2>
+    );
+  }
   return (
     <>
       {isLoading && (
