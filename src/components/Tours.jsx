@@ -1,7 +1,9 @@
 import React from "react";
 import Tour from "./Tour";
 function Tours(props) {
-  console.log(props.data);
+  const handleDelete = (id) => {
+    props.handleDelete(id);
+  };
   return (
     <div className="flex flex-col lg:flex-row w-2/3 m-auto flex-wrap">
       {props.data.map((item) => {
@@ -11,6 +13,8 @@ function Tours(props) {
             name={item.name}
             info={item.info}
             img={item.image}
+            id={item.id}
+            handleDelete={handleDelete}
           />
         );
       })}

@@ -6,6 +6,9 @@ function Tour(props) {
   const handleClick = () => {
     setShowMore(!showMore);
   };
+  const handleDelete = () => {
+    props.handleDelete(props.id);
+  };
   const mes = showMore ? "show less..." : "read more...";
   const showClass = showMore ? "" : "h-36 overflow-hidden";
   return (
@@ -21,6 +24,12 @@ function Tour(props) {
         <p onClick={handleClick} className="text-blue-500 cursor-pointer">
           {mes}
         </p>
+        <button
+          onClick={handleDelete}
+          className="bg-white border border-green-500 text-green-500 w-full mt-4 text-sm py-1 hover:bg-green-500 hover:text-white transition-all duration-300"
+        >
+          Not Interested
+        </button>
       </div>
     </div>
   );
