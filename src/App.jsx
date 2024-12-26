@@ -6,7 +6,7 @@ function App() {
   const [data, setData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
   const handleDelete = (id) => {
     const newData = data.filter((item) => {
       return item.id !== id;
@@ -14,28 +14,29 @@ function App() {
     setData(newData);
   };
   const handleRefresh = () => {
-    setRefresh(true);
+    // setRefresh(true);
+    myFetch();
   };
-
-  useEffect(() => {
-    async function myFetch() {
-      try {
-        const response = await fetch(url);
-        const datas = await response.json();
-        setData(datas);
-        console.log(data);
-        if (!response.ok) {
-          setIsError(true);
-        }
-      } catch (error) {
-        console.log(error);
+  async function myFetch() {
+    try {
+      const response = await fetch(url);
+      const datas = await response.json();
+      setData(datas);
+      if (!response.ok) {
         setIsError(true);
       }
-      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
     }
+    setIsLoading(false);
+  }
+  useEffect(() => {
+    setIsLoading(true);
+
     myFetch();
-    setRefresh(false);
-  }, [refresh]);
+    // setRefresh(false);
+  }, []);
   const title = data.length > 0 ? "Our Tours" : "No Tours Left";
   if (isError) {
     return (
