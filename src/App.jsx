@@ -6,11 +6,15 @@ function App() {
   const [data, setData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const handleDelete = (id) => {
     const newData = data.filter((item) => {
       return item.id !== id;
     });
     setData(newData);
+  };
+  const handleRefresh = () => {
+    setRefresh(true);
   };
 
   useEffect(() => {
@@ -30,7 +34,8 @@ function App() {
       setIsLoading(false);
     }
     myFetch();
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
   const title = data.length > 0 ? "Our Tours" : "No Tours Left";
   if (isError) {
     return (
@@ -54,12 +59,16 @@ function App() {
             <h2 className="font-semibold text-2xl text-[rgba(0,0,0,0.8)]">
               {title}
             </h2>
-            {/* {data.length == 0 && (
-              <button className="bg-green-500 text-white text-sm">
+
+            <div className="absolute w-[5%] left-1/2 -translate-x-1/2 mt-1 border-2 border-green-300"></div>
+            {data.length == 0 && (
+              <button
+                onClick={handleRefresh}
+                className="bg-green-500 px-5 py-1 mt-5 hover:bg-white hover:text-green-500 border transition-all duration-300 border-green-500 text-white text-sm"
+              >
                 Refresh
               </button>
-            )} */}
-            <div className="absolute w-[5%] left-1/2 -translate-x-1/2 mt-1 border-2 border-green-300"></div>
+            )}
           </div>
           <Tours data={data} handleDelete={handleDelete} />
         </div>
